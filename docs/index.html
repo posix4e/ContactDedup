@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContactDedup - Clean Up Your Contacts</title>
+    <style>
+        :root {
+            --primary: #4A90D9;
+            --primary-dark: #1E5AA8;
+            --success: #22C55E;
+            --bg: #F8FAFC;
+            --text: #1E293B;
+            --text-light: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-dark);
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .features {
+            padding: 80px 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        .how-it-works {
+            background: white;
+            padding: 80px 20px;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .step {
+            text-align: center;
+            max-width: 250px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: var(--text-light);
+        }
+
+        .import-sources {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .import-sources h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .import-sources p {
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .source-logos {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .source {
+            text-align: center;
+        }
+
+        .source-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .source-icon.apple { background: #000; color: white; }
+        .source-icon.google { background: #EA4335; color: white; }
+        .source-icon.linkedin { background: #0A66C2; color: white; }
+
+        .privacy {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .privacy h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .privacy p {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .privacy-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .privacy-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features h2, .how-it-works h2, .import-sources h2, .privacy h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <img src="icon.png" alt="ContactDedup Icon" class="app-icon">
+        <h1>ContactDedup</h1>
+        <p>Clean up your contacts effortlessly. Find duplicates, merge entries, and import from multiple sources - all in one app.</p>
+        <a href="https://testflight.apple.com/join/XXXXX" class="cta-button">Download on TestFlight</a>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Powerful Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Duplicate Detection</h3>
+                    <p>Advanced algorithms find duplicates by name, email, phone number, or similar patterns. Adjustable sensitivity lets you control matching strictness.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>One-Tap Merge</h3>
+                    <p>Combine duplicate contacts while preserving all information. Merge individually or batch process all duplicates at once.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📥</div>
+                    <h3>Multi-Source Import</h3>
+                    <p>Import contacts from Apple Contacts, multiple Google accounts, and LinkedIn CSV exports. Keep everything in sync.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧹</div>
+                    <h3>Incomplete Contact Cleanup</h3>
+                    <p>Find and remove contacts missing essential information like email or phone number. Keep your contact list clean.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✏️</div>
+                    <h3>Easy Editing</h3>
+                    <p>Update contact details directly in the app. Changes sync back to Apple Contacts automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>All processing happens on your device. No contact data is ever sent to external servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Import Contacts</h3>
+                    <p>Load your contacts from Apple, Google, or LinkedIn with just a few taps.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Find Duplicates</h3>
+                    <p>Our smart algorithm analyzes your contacts and groups potential duplicates.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Review & Merge</h3>
+                    <p>Review suggested duplicates, choose which to merge, and clean up your list.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Stay Organized</h3>
+                    <p>Your contacts stay clean and synchronized across all your devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="import-sources">
+        <div class="container">
+            <h2>Import From Anywhere</h2>
+            <p>Connect all your contact sources and keep them in sync.</p>
+            <div class="source-logos">
+                <div class="source">
+                    <div class="source-icon apple"></div>
+                    <strong>Apple Contacts</strong>
+                </div>
+                <div class="source">
+                    <div class="source-icon google">G</div>
+                    <strong>Google Contacts</strong>
+                </div>
+                <div class="source">
+                    <div class="source-icon linkedin">in</div>
+                    <strong>LinkedIn</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="privacy">
+        <div class="container">
+            <h2>Your Privacy Matters</h2>
+            <p>ContactDedup is designed with privacy at its core. Your contact data never leaves your device.</p>
+            <div class="privacy-features">
+                <div class="privacy-item">
+                    <span>✓</span> On-device processing
+                </div>
+                <div class="privacy-item">
+                    <span>✓</span> No data collection
+                </div>
+                <div class="privacy-item">
+                    <span>✓</span> No external servers
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with ❤️ by <a href="https://github.com/posix4e">posix4e</a></p>
+        <p style="margin-top: 10px; opacity: 0.7;">
+            <a href="https://github.com/posix4e/ContactDedup">GitHub</a> ·
+            <a href="privacy.html">Privacy Policy</a> ·
+            <a href="mailto:support@example.com">Support</a>
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,26 @@
+disabled_rules:
+  - trailing_whitespace
+
+opt_in_rules:
+  - empty_count
+  - empty_string
+  - closure_spacing
+
+excluded:
+  - build
+  - DerivedData
+  - Pods
+  - .build
+
+identifier_name:
+  min_length: 1
+  max_length: 60
+
+large_tuple:
+  warning: 4
+  error: 5
+
+nesting:
+  type_level: 3
+
+reporter: "xcode"

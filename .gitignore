@@ -1,0 +1,42 @@
+# Build artifacts
+build/
+DerivedData/
+
+# Xcode user data
+*.xcuserstate
+xcuserdata/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+
+# CocoaPods / SPM
+Pods/
+.build/
+
+# Secrets and credentials - NEVER COMMIT THESE
+*.xcconfig
+!*.xcconfig.template
+*.p8
+*.p12
+*.mobileprovision
+*.cer
+*.certSigningRequest
+ExportOptions.plist
+AuthKey*.p8
+Certificates.p12
+
+# Environment and secret files
+.env
+.env.*
+*.secret
+*.secrets
+secrets/
+credentials/
+
+# PDF files (may contain sensitive exports)
+*.pdf
+
+# CSV exports (may contain contact data)
+*.csv
+Connections.csv

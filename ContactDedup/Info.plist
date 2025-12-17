@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSContactsUsageDescription</key>
+	<string>ContactDedup needs access to your contacts to find and merge duplicates.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.453195487736-gi4mt73fmhus94r8sum6ron0alh3eloj</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>453195487736-gi4mt73fmhus94r8sum6ron0alh3eloj.apps.googleusercontent.com</string>
+</dict>
+</plist>
