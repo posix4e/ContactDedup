@@ -52,7 +52,7 @@ The app is available for beta testing on TestFlight.
 ## Requirements
 
 - iOS 17.0+
-- Xcode 15.0+
+- Xcode 16.0+ (for iOS 18 SDK features)
 
 ## CI/CD
 
@@ -73,7 +73,9 @@ To set up CI/CD for your fork, configure these GitHub secrets:
 | `APP_STORE_CONNECT_ISSUER_ID` | App Store Connect Issuer ID |
 | `APP_STORE_CONNECT_API_KEY` | App Store Connect API Key (.p8 content, base64) |
 | `CERTIFICATE_P12` | Distribution certificate (.p12, base64) |
-| `CERTIFICATE_PASSWORD` | Password for the .p12 certificate |
+| `CERTIFICATE_PASSWORD` | Password for the distribution .p12 certificate |
+| `CERTIFICATE_DEV_P12` | Development certificate (.p12, base64) |
+| `CERTIFICATE_DEV_PASSWORD` | Password for the development .p12 certificate |
 | `PROVISIONING_PROFILE` | Provisioning profile (.mobileprovision, base64) |
 
 ## Privacy
