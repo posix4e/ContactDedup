@@ -32,14 +32,15 @@ class AppleContactsManager {
     func requestAccess() async throws -> Bool {
         let status = CNContactStore.authorizationStatus(for: .contacts)
         switch status {
-        case .authorized, .limited:
+        case .authorized:
             return true
         case .notDetermined:
             return try await contactStore.requestAccess(for: .contacts)
         case .denied, .restricted:
             throw ContactError.accessDenied
         @unknown default:
-            throw ContactError.accessDenied
+            // Handles .limited (iOS 18+) and future cases
+            return true
         }
     }
 
