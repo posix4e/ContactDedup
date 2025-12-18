@@ -91,6 +91,18 @@ jobs:
       - name: Run SwiftLint
         run: swiftlint lint --reporter github-actions-logging
 
+      - name: Set build number
+        run: |
+          # Use GitHub run number as build number (auto-increments)
+          BUILD_NUMBER=${{ github.run_number }}
+          echo "Setting build number to $BUILD_NUMBER"
+
+          # Update build number in project
+          sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/g" ContactDedup.xcodeproj/project.pbxproj
+
+          # Verify
+          grep "CURRENT_PROJECT_VERSION" ContactDedup.xcodeproj/project.pbxproj
+
       - name: Install the Apple certificates and provisioning profile
         env:
           CERTIFICATE_P12: ${{ secrets.CERTIFICATE_P12 }}
