@@ -239,6 +239,110 @@
             gap: 10px;
         }
 
+        .request-access {
+            padding: 80px 20px;
+            background: var(--bg);
+            text-align: center;
+        }
+
+        .request-access h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .request-access > p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .request-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .request-form h3 {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(74, 144, 217, 0.4);
+        }
+
         footer {
             background: var(--text);
             color: white;
@@ -298,8 +402,12 @@
                 font-size: 2rem;
             }
 
-            .features h2, .how-it-works h2, .import-sources h2, .privacy h2, .screenshots h2 {
+            .features h2, .how-it-works h2, .import-sources h2, .privacy h2, .screenshots h2, .request-access h2 {
                 font-size: 1.75rem;
+            }
+
+            .request-form {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -449,12 +557,76 @@
         </div>
     </section>
 
+    <section class="request-access" id="request-access">
+        <div class="container">
+            <h2>Request Beta Access</h2>
+            <p>Want to try ContactDedup with Google Contacts integration? Request access to get TestFlight beta and Google OAuth credentials.</p>
+            <div class="request-form">
+                <h3>Get Early Access</h3>
+                <form id="accessForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>What do you need access to?</label>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="testflight" name="testflight" value="TestFlight">
+                                TestFlight Beta
+                            </label>
+                            <label>
+                                <input type="checkbox" id="google" name="google" value="Google">
+                                Google Contacts Integration
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Why do you want to try ContactDedup? (optional)</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your use case..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Request Access</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('accessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const testflight = document.getElementById('testflight').checked;
+            const google = document.getElementById('google').checked;
+            const message = document.getElementById('message').value;
+
+            let accessTypes = [];
+            if (testflight) accessTypes.push('TestFlight Beta');
+            if (google) accessTypes.push('Google Contacts Integration');
+
+            const subject = encodeURIComponent('ContactDedup Beta Access Request');
+            const body = encodeURIComponent(
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Access Requested: ${accessTypes.join(', ') || 'Not specified'}\n\n` +
+                `Message:\n${message || 'No message provided'}`
+            );
+
+            window.location.href = `mailto:posix4e@gmail.com?subject=${subject}&body=${body}`;
+        });
+    </script>
+
     <footer>
         <p>Made with ❤️ by <a href="https://github.com/posix4e">posix4e</a></p>
         <p style="margin-top: 10px; opacity: 0.7;">
             <a href="https://github.com/posix4e/ContactDedup">GitHub</a> ·
             <a href="privacy.html">Privacy Policy</a> ·
-            <a href="mailto:support@example.com">Support</a>
+            <a href="mailto:posix4e@gmail.com">Support</a>
         </p>
     </footer>
 </body>
