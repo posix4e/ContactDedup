@@ -10,8 +10,6 @@
 		E91000012D127A8000000001 /* ContactDedupApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000002D127A8000000001 /* ContactDedupApp.swift */; };
 		E91000032D127A8000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000022D127A8000000002 /* ContentView.swift */; };
 		E91000052D127A8000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91000042D127A8000000003 /* Assets.xcassets */; };
-		E91000072D127A8000000004 /* ContactDedup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */; };
-		E91000092D127A8000000005 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000082D127A8000000005 /* CoreDataManager.swift */; };
 		E910000B2D127A8000000006 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000A2D127A8000000006 /* Contact.swift */; };
 		E910000D2D127A8000000007 /* AppleContactsImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000C2D127A8000000007 /* AppleContactsImporter.swift */; };
 		E910000F2D127A8000000008 /* GoogleContactsImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000E2D127A8000000008 /* GoogleContactsImporter.swift */; };
@@ -36,7 +34,6 @@
 		E91000002D127A8000000001 /* ContactDedupApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDedupApp.swift; sourceTree = "<group>"; };
 		E91000022D127A8000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E91000042D127A8000000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E91000082D127A8000000005 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E910000A2D127A8000000006 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		E910000C2D127A8000000007 /* AppleContactsImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContactsImporter.swift; sourceTree = "<group>"; };
 		E910000E2D127A8000000008 /* GoogleContactsImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleContactsImporter.swift; sourceTree = "<group>"; };
@@ -54,7 +51,6 @@
 		E910004F2D127A8000000050 /* LinkedInImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInImporter.swift; sourceTree = "<group>"; };
 		E91000262D127A8000000014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E91000272D127A8000000015 /* ContactDedup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContactDedup.entitlements; sourceTree = "<group>"; };
-		E91000342D127A8000000025 /* ContactDedup.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDedup.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,12 +90,10 @@
 				E91000042D127A8000000003 /* Assets.xcassets */,
 				E91000262D127A8000000014 /* Info.plist */,
 				E91000272D127A8000000015 /* ContactDedup.entitlements */,
-				E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */,
 				E91000292D127A800000001A /* Models */,
 				E910002A2D127A800000001B /* Views */,
 				E910002B2D127A800000001C /* ViewModels */,
 				E910002C2D127A800000001D /* Services */,
-				E910002D2D127A800000001E /* CoreData */,
 			);
 			path = ContactDedup;
 			sourceTree = "<group>";
@@ -145,14 +139,6 @@
 				E91000242D127A8000000013 /* GoogleAuthManager.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		E910002D2D127A800000001E /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				E91000082D127A8000000005 /* CoreDataManager.swift */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,8 +219,6 @@
 			files = (
 				E91000012D127A8000000001 /* ContactDedupApp.swift in Sources */,
 				E91000032D127A8000000002 /* ContentView.swift in Sources */,
-				E91000072D127A8000000004 /* ContactDedup.xcdatamodeld in Sources */,
-				E91000092D127A8000000005 /* CoreDataManager.swift in Sources */,
 				E910000B2D127A8000000006 /* Contact.swift in Sources */,
 				E910000D2D127A8000000007 /* AppleContactsImporter.swift in Sources */,
 				E910000F2D127A8000000008 /* GoogleContactsImporter.swift in Sources */,
@@ -482,19 +466,6 @@
 		};
 /* End XCSwiftPackageProductDependency section */
 
-/* Begin XCVersionGroup section */
-		E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E91000342D127A8000000025 /* ContactDedup.xcdatamodel */,
-			);
-			currentVersion = E91000342D127A8000000025 /* ContactDedup.xcdatamodel */;
-			name = ContactDedup.xcdatamodeld;
-			path = CoreData/ContactDedup.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E90FFFF72D127A7F00000000 /* Project object */;
 }
