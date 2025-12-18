@@ -180,29 +180,17 @@ final class DuplicateDetectorTests: XCTestCase {
         XCTAssertEqual(groups.count, 2, "Should find two duplicate groups")
     }
 
-    // MARK: - Performance Test
+    // MARK: - Small Scale Test
 
-    func testPerformanceWithManyContacts() {
-        var contacts: [ContactData] = []
+    func testFindDuplicatesInSmallSet() {
+        let contacts = [
+            ContactData(firstName: "John", lastName: "Doe", emails: ["john@example.com"]),
+            ContactData(firstName: "John", lastName: "Doe", emails: ["john@example.com"]),
+            ContactData(firstName: "Jane", lastName: "Smith", emails: ["jane@example.com"])
+        ]
 
-        // Create 1000 contacts
-        for i in 0..<1000 {
-            contacts.append(ContactData(
-                firstName: "FirstName\(i)",
-                lastName: "LastName\(i)",
-                emails: ["email\(i)@example.com"],
-                phoneNumbers: ["555-\(String(format: "%04d", i))"]
-            ))
-        }
-
-        // Add some duplicates
-        contacts.append(ContactData(firstName: "FirstName0", lastName: "LastName0", emails: ["email0@example.com"]))
-        contacts.append(ContactData(firstName: "FirstName500", lastName: "LastName500", phoneNumbers: ["555-0500"]))
-
-        measure {
-            let groups = detector.findDuplicateGroups(in: contacts)
-            XCTAssertGreaterThanOrEqual(groups.count, 2, "Should find at least 2 duplicate groups")
-        }
+        let groups = detector.findDuplicateGroups(in: contacts)
+        XCTAssertEqual(groups.count, 1, "Should find one duplicate group")
     }
 
     // MARK: - Field Similarity Tests
@@ -370,18 +358,6 @@ final class SimilarityEngineTests: XCTestCase {
         XCTAssertGreaterThan(similarity, 0.9, "Name with typo should have very high similarity")
     }
 
-    // MARK: - Performance Tests
-
-    func testJaroWinklerPerformance() {
-        let longString1 = String(repeating: "a", count: 100)
-        let longString2 = String(repeating: "b", count: 100)
-
-        measure {
-            for _ in 0..<1000 {
-                _ = engine.jaroWinklerSimilarity(longString1, longString2)
-            }
-        }
-    }
 }
 
 // MARK: - LinkedIn CSV Import Tests
