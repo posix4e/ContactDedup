@@ -31,7 +31,7 @@ jobs:
           xcodebuild test \
             -project ContactDedup.xcodeproj \
             -scheme ContactDedup \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
             -only-testing:ContactDedupTests \
             -resultBundlePath TestResults.xcresult \
             CODE_SIGN_IDENTITY="" \
@@ -70,7 +70,7 @@ jobs:
           xcodebuild test \
             -project ContactDedup.xcodeproj \
             -scheme ContactDedup \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
             -only-testing:ContactDedupUITests \
             -resultBundlePath UITestResults.xcresult \
             CODE_SIGN_IDENTITY="" \
