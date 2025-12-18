@@ -69,7 +69,10 @@ class DuplicateDetector {
 
     // MARK: - Main Detection
 
-    func findDuplicateGroups(in contacts: [ContactData], progressHandler: ((Int, String) -> Void)? = nil) -> [DuplicateGroup] {
+    func findDuplicateGroups(
+        in contacts: [ContactData],
+        progressHandler: ((Int, String) -> Void)? = nil
+    ) -> [DuplicateGroup] {
         var groups: [DuplicateGroup] = []
         var processedIds = Set<UUID>()
 
@@ -214,7 +217,10 @@ class DuplicateDetector {
         return "\(first)\(last)"
     }
 
-    func findPotentialDuplicates(for contact: ContactData, in contacts: [ContactData]) -> [(contact: ContactData, score: Double)] {
+    func findPotentialDuplicates(
+        for contact: ContactData,
+        in contacts: [ContactData]
+    ) -> [(contact: ContactData, score: Double)] {
         var duplicates: [(ContactData, Double)] = []
 
         for other in contacts {
@@ -265,9 +271,11 @@ class DuplicateDetector {
         // Check exact email match first (fastest check using Sets)
         let emailIntersection = normalized1.normalizedEmails.intersection(normalized2.normalizedEmails)
         if !emailIntersection.isEmpty {
+            let namesMatch = normalized1.firstName == normalized2.firstName
+                && normalized1.lastName == normalized2.lastName
             return SimilarityResult(
                 matchType: .exactEmail,
-                nameSimilarity: normalized1.firstName == normalized2.firstName && normalized1.lastName == normalized2.lastName ? 1.0 : 0.5,
+                nameSimilarity: namesMatch ? 1.0 : 0.5,
                 emailSimilarity: 1.0,
                 phoneSimilarity: 0.0,
                 companySimilarity: normalized1.company == normalized2.company ? 1.0 : 0.0
@@ -277,9 +285,11 @@ class DuplicateDetector {
         // Check exact phone match (using normalized phone numbers)
         let phoneIntersection = normalized1.normalizedPhones.intersection(normalized2.normalizedPhones)
         if !phoneIntersection.isEmpty {
+            let namesMatch = normalized1.firstName == normalized2.firstName
+                && normalized1.lastName == normalized2.lastName
             return SimilarityResult(
                 matchType: .exactPhone,
-                nameSimilarity: normalized1.firstName == normalized2.firstName && normalized1.lastName == normalized2.lastName ? 1.0 : 0.5,
+                nameSimilarity: namesMatch ? 1.0 : 0.5,
                 emailSimilarity: 0.0,
                 phoneSimilarity: 1.0,
                 companySimilarity: normalized1.company == normalized2.company ? 1.0 : 0.0
@@ -289,9 +299,11 @@ class DuplicateDetector {
         // Check phone suffix match (last 7 digits)
         let suffixIntersection = normalized1.phoneSuffixes.intersection(normalized2.phoneSuffixes)
         if !suffixIntersection.isEmpty {
+            let namesMatch = normalized1.firstName == normalized2.firstName
+                && normalized1.lastName == normalized2.lastName
             return SimilarityResult(
                 matchType: .exactPhone,
-                nameSimilarity: normalized1.firstName == normalized2.firstName && normalized1.lastName == normalized2.lastName ? 1.0 : 0.5,
+                nameSimilarity: namesMatch ? 1.0 : 0.5,
                 emailSimilarity: 0.0,
                 phoneSimilarity: 0.95,
                 companySimilarity: normalized1.company == normalized2.company ? 1.0 : 0.0
@@ -466,7 +478,7 @@ extension DuplicateDetector {
         let emails1Set = Set(contact1.emails.map { $0.lowercased() })
         let emails2Set = Set(contact2.emails.map { $0.lowercased() })
 
-        if !emails1Set.intersection(emails2Set).isEmpty { return 1.0 }
+        if !emails1Set.isDisjoint(with: emails2Set) { return 1.0 }
 
         var maxSim = 0.0
         for email1 in contact1.emails {
@@ -483,7 +495,7 @@ extension DuplicateDetector {
         let phones1 = contact1.phoneNumbers.map { normalizePhone($0) }
         let phones2 = contact2.phoneNumbers.map { normalizePhone($0) }
 
-        if !Set(phones1).intersection(Set(phones2)).isEmpty { return 1.0 }
+        if !Set(phones1).isDisjoint(with: Set(phones2)) { return 1.0 }
 
         for p1 in phones1 {
             for p2 in phones2 {

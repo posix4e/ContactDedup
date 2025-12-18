@@ -1,0 +1,83 @@
+# SwiftLint configuration for ContactDedup
+
+# Exclude build and dependency directories
+excluded:
+  - ${PWD}/Carthage
+  - ${PWD}/Pods
+  - ${PWD}/DerivedData
+  - ${PWD}/.build
+
+# Rules configuration
+disabled_rules:
+  - trailing_whitespace  # Auto-fixed by Xcode
+
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+
+# Identifier name configuration - allow common short names for algorithms
+identifier_name:
+  min_length:
+    warning: 1  # Allow single-character names
+    error: 0
+  max_length:
+    warning: 60
+    error: 80
+  excluded:
+    - id
+    - i
+    - j
+    - k
+    - m
+    - n
+    - a
+    - b
+    - x
+    - y
+    - s1
+    - s2
+    - e1
+    - e2
+    - p1
+    - p2
+    - w1
+    - w2
+    - m1
+    - m2
+    - fn
+    - ln
+
+# Line length configuration
+line_length:
+  warning: 120
+  error: 200
+  ignores_urls: true
+  ignores_function_declarations: true
+  ignores_comments: true
+
+# File length configuration
+file_length:
+  warning: 600
+  error: 1000
+
+# Type body length configuration
+type_body_length:
+  warning: 400
+  error: 600
+
+# Function body length configuration
+function_body_length:
+  warning: 80
+  error: 150
+
+# Cyclomatic complexity
+cyclomatic_complexity:
+  warning: 20
+  error: 30
+
+# Nesting configuration
+nesting:
+  type_level:
+    warning: 2
+  function_level:
+    warning: 3

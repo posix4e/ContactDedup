@@ -265,10 +265,20 @@ class SimilarityEngine {
 
     // MARK: - Combined Name Similarity
 
-    func nameSimilarity(firstName1: String, lastName1: String, firstName2: String, lastName2: String) -> Double {
+    func nameSimilarity(
+        firstName1: String,
+        lastName1: String,
+        firstName2: String,
+        lastName2: String
+    ) -> Double {
         // Handle swapped names
-        let directScore = (jaroWinklerSimilarity(firstName1, firstName2) + jaroWinklerSimilarity(lastName1, lastName2)) / 2
-        let swappedScore = (jaroWinklerSimilarity(firstName1, lastName2) + jaroWinklerSimilarity(lastName1, firstName2)) / 2
+        let firstNameMatch = jaroWinklerSimilarity(firstName1, firstName2)
+        let lastNameMatch = jaroWinklerSimilarity(lastName1, lastName2)
+        let directScore = (firstNameMatch + lastNameMatch) / 2
+
+        let swappedFirstName = jaroWinklerSimilarity(firstName1, lastName2)
+        let swappedLastName = jaroWinklerSimilarity(lastName1, firstName2)
+        let swappedScore = (swappedFirstName + swappedLastName) / 2
 
         let stringScore = max(directScore, swappedScore * 0.9)
 
