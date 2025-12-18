@@ -15,23 +15,15 @@ jobs:
 
       - name: Select Xcode
         run: |
-          # List available Xcode versions and select the latest stable
-          ls -la /Applications/ | grep Xcode
-          sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
           xcodebuild -version
-
-      - name: Show available destinations
-        run: xcodebuild -project ContactDedup.xcodeproj -scheme ContactDedup -showdestinations | head -50
 
       - name: Run Unit Tests
         run: |
-          # Use any available iOS Simulator
           xcodebuild test \
             -project ContactDedup.xcodeproj \
             -scheme ContactDedup \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.4' \
             -only-testing:ContactDedupTests \
             -resultBundlePath TestResults.xcresult \
             CODE_SIGN_IDENTITY="" \
@@ -54,23 +46,15 @@ jobs:
 
       - name: Select Xcode
         run: |
-          # List available Xcode versions and select the latest stable
-          ls -la /Applications/ | grep Xcode
-          sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer || \
-          sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
           xcodebuild -version
-
-      - name: Show available destinations
-        run: xcodebuild -project ContactDedup.xcodeproj -scheme ContactDedup -showdestinations | head -50
 
       - name: Run UI Tests
         run: |
-          # Use any available iOS Simulator
           xcodebuild test \
             -project ContactDedup.xcodeproj \
             -scheme ContactDedup \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.4' \
             -only-testing:ContactDedupUITests \
             -resultBundlePath UITestResults.xcresult \
             CODE_SIGN_IDENTITY="" \
