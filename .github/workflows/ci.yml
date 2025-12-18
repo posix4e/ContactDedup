@@ -124,9 +124,14 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # Apply provisioning profile
+          # Apply provisioning profile with proper UUID-based name
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
+          PROFILE_UUID=$(security cms -D -i $PROFILE_PATH | grep -A1 UUID | grep string | sed 's/.*<string>\(.*\)<\/string>.*/\1/')
+          cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/${PROFILE_UUID}.mobileprovision
+          echo "Installed provisioning profile with UUID: $PROFILE_UUID"
+
+          # Export for later use
+          echo "PROVISIONING_PROFILE_UUID=$PROFILE_UUID" >> $GITHUB_ENV
 
       - name: Build archive
         env:
@@ -144,11 +149,10 @@ jobs:
             -configuration Release \
             -archivePath $RUNNER_TEMP/ContactDedup.xcarchive \
             -destination 'generic/platform=iOS' \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8 \
-            -authenticationKeyID "$APP_STORE_CONNECT_KEY_ID" \
-            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_UUID" \
             archive
 
       - name: Create ExportOptions.plist
@@ -165,26 +169,25 @@ jobs:
               <key>teamID</key>
               <string>$APPLE_TEAM_ID</string>
               <key>signingStyle</key>
-              <string>automatic</string>
+              <string>manual</string>
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>net.ttt246.ContactDedup</key>
+                  <string>$PROVISIONING_PROFILE_UUID</string>
+              </dict>
               <key>uploadSymbols</key>
               <true/>
           </dict>
           </plist>
           EOF
+          echo "Created ExportOptions.plist with profile UUID: $PROVISIONING_PROFILE_UUID"
 
       - name: Export IPA
-        env:
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         run: |
           xcodebuild -exportArchive \
             -archivePath $RUNNER_TEMP/ContactDedup.xcarchive \
             -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
-            -exportPath $RUNNER_TEMP/export \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8 \
-            -authenticationKeyID "$APP_STORE_CONNECT_KEY_ID" \
-            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
+            -exportPath $RUNNER_TEMP/export
 
       - name: Upload to TestFlight
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
