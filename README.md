@@ -1,6 +1,6 @@
 # ContactDedup
 
-[![Build and Upload to TestFlight](https://github.com/posix4e/ContactDedup/actions/workflows/testflight.yml/badge.svg)](https://github.com/posix4e/ContactDedup/actions/workflows/testflight.yml)
+[![CI/CD](https://github.com/posix4e/ContactDedup/actions/workflows/ci.yml/badge.svg)](https://github.com/posix4e/ContactDedup/actions/workflows/ci.yml)
 
 A powerful iOS app to clean up and manage your contacts by finding duplicates, importing from multiple sources, and keeping everything organized.
 

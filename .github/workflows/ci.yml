@@ -1,12 +1,81 @@
-name: Build and Upload to TestFlight
+name: CI/CD
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  build:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for sensitive files
+        run: |
+          echo "Checking for sensitive files that should not be committed..."
+
+          FOUND_ISSUES=0
+
+          # Check for certificate and key files
+          for pattern in "*.p8" "*.p12" "*.mobileprovision" "*.cer" "*.pem" "*.key"; do
+            FILES=$(find . -name "$pattern" -not -path "./.git/*" 2>/dev/null || true)
+            if [ -n "$FILES" ]; then
+              echo "::error::Found sensitive file pattern $pattern:"
+              echo "$FILES"
+              FOUND_ISSUES=1
+            fi
+          done
+
+          # Check for common secret file names
+          for filename in ".env" ".env.local" "secrets.json" "credentials.json" "Connections.csv"; do
+            if [ -f "$filename" ]; then
+              echo "::error::Found sensitive file: $filename"
+              FOUND_ISSUES=1
+            fi
+          done
+
+          # Check for private keys in file content (pattern split to avoid self-match)
+          PK_PAT="BEGIN"
+          PK_PAT="${PK_PAT} PRIVATE KEY"
+          if grep -r "$PK_PAT" --include="*.swift" --include="*.plist" --include="*.json" . 2>/dev/null; then
+            echo "::error::Found private key content in source files!"
+            FOUND_ISSUES=1
+          fi
+
+          if [ $FOUND_ISSUES -eq 1 ]; then
+            echo ""
+            echo "::error::Sensitive files detected! Please remove them and add to .gitignore"
+            exit 1
+          fi
+
+          echo "✅ No sensitive files detected"
+
+      - name: Verify gitignore coverage
+        run: |
+          echo "Verifying .gitignore includes common sensitive patterns..."
+
+          MISSING=0
+          for pattern in "*.p8" "*.p12" "*.mobileprovision" ".env" "*.csv"; do
+            if ! grep -q "$pattern" .gitignore 2>/dev/null; then
+              echo "::warning::Pattern '$pattern' not found in .gitignore"
+              MISSING=1
+            fi
+          done
+
+          if [ $MISSING -eq 1 ]; then
+            echo "::warning::Some sensitive patterns may not be in .gitignore"
+          else
+            echo "✅ .gitignore covers common sensitive patterns"
+          fi
+
+  build-and-deploy:
+    needs: security-scan
     runs-on: macos-14
 
     steps:
@@ -118,6 +187,7 @@ jobs:
             -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
 
       - name: Upload to TestFlight
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
