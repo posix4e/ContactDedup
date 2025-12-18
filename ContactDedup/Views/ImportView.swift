@@ -49,7 +49,8 @@ struct ImportView: View {
                     }
                     .padding(.vertical, 8)
                 } footer: {
-                    Text("Loads contacts from your Apple Contacts app. Changes you make (merges, deletions) will sync back to Apple Contacts.")
+                    Text("Loads contacts from your Apple Contacts app. " +
+                         "Changes you make (merges, deletions) will sync back to Apple Contacts.")
                 }
 
                 // Google Accounts Section
@@ -62,7 +63,8 @@ struct ImportView: View {
                             VStack(alignment: .leading) {
                                 Text("Google Contacts")
                                     .font(.headline)
-                                Text("\(authManager.accounts.count) account\(authManager.accounts.count == 1 ? "" : "s") connected")
+                                let suffix = authManager.accounts.count == 1 ? "" : "s"
+                                Text("\(authManager.accounts.count) account\(suffix) connected")
                                     .font(.caption)
                                     .foregroundColor(authManager.accounts.isEmpty ? .secondary : .green)
                             }
@@ -139,7 +141,8 @@ struct ImportView: View {
                     }
                     .padding(.vertical, 8)
                 } footer: {
-                    Text("Import contacts from your Google accounts. Duplicates will be detected after import. Tap + to add another account.")
+                    Text("Import contacts from your Google accounts. " +
+                         "Duplicates will be detected after import. Tap + to add another account.")
                 }
 
                 // LinkedIn Section
@@ -173,7 +176,9 @@ struct ImportView: View {
                     }
                     .padding(.vertical, 8)
                 } footer: {
-                    Text("Export your connections from LinkedIn Settings > Data Privacy > Get a copy of your data > Connections. Only contacts with email addresses will be imported.")
+                    Text("Export your connections from LinkedIn Settings > Data Privacy > " +
+                         "Get a copy of your data > Connections. " +
+                         "Only contacts with email addresses will be imported.")
                 }
 
                 // Import Progress
@@ -232,7 +237,12 @@ struct ImportView: View {
             } message: {
                 Text(viewModel.errorMessage ?? "")
             }
-            .alert("Success", isPresented: .constant(viewModel.successMessage != nil && !viewModel.isLoading && !viewModel.isImporting)) {
+            .alert(
+                "Success",
+                isPresented: .constant(
+                    viewModel.successMessage != nil && !viewModel.isLoading && !viewModel.isImporting
+                )
+            ) {
                 Button("OK") { viewModel.clearMessages() }
             } message: {
                 Text(viewModel.successMessage ?? "")

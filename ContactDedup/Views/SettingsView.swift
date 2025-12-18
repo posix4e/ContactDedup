@@ -95,7 +95,8 @@ struct SettingsView: View {
                 } header: {
                     Text("Data")
                 } footer: {
-                    Text("Reset dismissed duplicates will show duplicate suggestions you previously marked as 'Not a Duplicate'.")
+                    Text("Reset dismissed duplicates will show duplicate suggestions " +
+                         "you previously marked as 'Not a Duplicate'.")
                 }
             }
             .navigationTitle("Settings")

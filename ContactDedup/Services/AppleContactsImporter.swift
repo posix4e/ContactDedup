@@ -106,7 +106,11 @@ class AppleContactsManager {
         }
 
         guard let mutableContact = existingContact.mutableCopy() as? CNMutableContact else {
-            throw ContactError.saveFailed(NSError(domain: "ContactDedup", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create mutable contact"]))
+            let error = NSError(
+                domain: "ContactDedup", code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to create mutable contact"]
+            )
+            throw ContactError.saveFailed(error)
         }
         applyContactData(contact, to: mutableContact)
 
@@ -140,7 +144,11 @@ class AppleContactsManager {
         }
 
         guard let mutableContact = existingContact.mutableCopy() as? CNMutableContact else {
-            throw ContactError.saveFailed(NSError(domain: "ContactDedup", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create mutable contact"]))
+            let error = NSError(
+                domain: "ContactDedup", code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to create mutable contact"]
+            )
+            throw ContactError.saveFailed(error)
         }
         let saveRequest = CNSaveRequest()
         saveRequest.delete(mutableContact)

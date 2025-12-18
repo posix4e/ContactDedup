@@ -54,7 +54,11 @@ class LinkedInImporter {
             throw ImportError.noContacts
         }
 
-        return try await importContacts(linkedInContacts, existingContacts: existingContacts, progressHandler: progressHandler)
+        return try await importContacts(
+            linkedInContacts,
+            existingContacts: existingContacts,
+            progressHandler: progressHandler
+        )
     }
 
     private func parseCSV(_ content: String) throws -> [ContactData] {
@@ -199,14 +203,21 @@ class LinkedInImporter {
             }
 
             // Check for existing duplicate by email or name
-            if let existingMatch = findExactMatch(for: linkedInContact, emailIndex: emailIndex, nameIndex: nameIndex, contactsById: contactsById) {
+            let existingMatch = findExactMatch(
+                for: linkedInContact,
+                emailIndex: emailIndex,
+                nameIndex: nameIndex,
+                contactsById: contactsById
+            )
+            if let existingMatch {
                 // Merge into existing contact
                 let merged = mergeContacts(existing: existingMatch, incoming: linkedInContact)
                 do {
                     try appleManager.updateContact(merged)
                     result.merged += 1
                 } catch {
-                    result.errors.append("Failed to merge \(linkedInContact.displayName): \(error.localizedDescription)")
+                    let name = linkedInContact.displayName
+                    result.errors.append("Failed to merge \(name): \(error.localizedDescription)")
                 }
             } else {
                 // Import as new contact
@@ -214,7 +225,8 @@ class LinkedInImporter {
                     try appleManager.createContact(linkedInContact)
                     result.imported += 1
                 } catch {
-                    result.errors.append("Failed to import \(linkedInContact.displayName): \(error.localizedDescription)")
+                    let name = linkedInContact.displayName
+                    result.errors.append("Failed to import \(name): \(error.localizedDescription)")
                 }
             }
         }

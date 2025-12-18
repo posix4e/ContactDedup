@@ -42,8 +42,10 @@ class CoreDataManager {
 
     func resetDatabase() -> Bool {
         // Get the store URL
-        guard let storeURL = _persistentContainer?.persistentStoreDescriptions.first?.url ??
-              FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("ContactDedup.sqlite") else {
+        let defaultURL = FileManager.default
+            .urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
+            .appendingPathComponent("ContactDedup.sqlite")
+        guard let storeURL = _persistentContainer?.persistentStoreDescriptions.first?.url ?? defaultURL else {
             return false
         }
 

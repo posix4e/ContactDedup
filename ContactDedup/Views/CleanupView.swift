@@ -27,7 +27,8 @@ struct CleanupView: View {
                                     Text("Incomplete Contacts")
                                         .font(.headline)
                                 }
-                                Text("These contacts have names but no email addresses or phone numbers. They may be outdated or incomplete entries.")
+                                Text("These contacts have names but no email addresses or phone numbers. " +
+                                     "They may be outdated or incomplete entries.")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -36,14 +37,18 @@ struct CleanupView: View {
 
                         Section {
                             ForEach(viewModel.incompleteContacts) { contact in
-                                IncompleteContactRow(contact: contact, isSelected: selectedContacts.contains(contact.id))
+                                IncompleteContactRow(
+                                    contact: contact,
+                                    isSelected: selectedContacts.contains(contact.id)
+                                )
                                     .tag(contact.id)
                             }
                         } header: {
                             HStack {
                                 Text("\(viewModel.incompleteContacts.count) contacts")
                                 Spacer()
-                                Button(selectedContacts.count == viewModel.incompleteContacts.count ? "Deselect All" : "Select All") {
+                                let allSelected = selectedContacts.count == viewModel.incompleteContacts.count
+                                Button(allSelected ? "Deselect All" : "Select All") {
                                     if selectedContacts.count == viewModel.incompleteContacts.count {
                                         selectedContacts.removeAll()
                                     } else {
@@ -101,7 +106,8 @@ struct CleanupView: View {
                     }
                 }
             } message: {
-                Text("This will permanently delete \(selectedContacts.count) contacts from your Apple Contacts. This cannot be undone.")
+                Text("This will permanently delete \(selectedContacts.count) contacts " +
+                     "from your Apple Contacts. This cannot be undone.")
             }
             .alert("Delete All Incomplete Contacts?", isPresented: $showDeleteAllConfirmation) {
                 Button("Cancel", role: .cancel) { }
@@ -112,7 +118,8 @@ struct CleanupView: View {
                     }
                 }
             } message: {
-                Text("This will permanently delete all \(viewModel.incompleteContacts.count) incomplete contacts from your Apple Contacts. This cannot be undone.")
+                Text("This will permanently delete all \(viewModel.incompleteContacts.count) " +
+                     "incomplete contacts from your Apple Contacts. This cannot be undone.")
             }
             .alert("Success", isPresented: .constant(viewModel.successMessage != nil && !viewModel.isLoading)) {
                 Button("OK") { viewModel.clearMessages() }

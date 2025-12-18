@@ -91,7 +91,11 @@ class GoogleContactsImporter {
         progressHandler: ((Int, Int) -> Void)? = nil
     ) async throws -> ImportResult {
         let googleContacts = try await fetchAllContacts()
-        return try await importContacts(googleContacts, existingContacts: existingContacts, progressHandler: progressHandler)
+        return try await importContacts(
+            googleContacts,
+            existingContacts: existingContacts,
+            progressHandler: progressHandler
+        )
     }
 
     func importWithDeduplication(
@@ -100,7 +104,11 @@ class GoogleContactsImporter {
         progressHandler: ((Int, Int) -> Void)? = nil
     ) async throws -> ImportResult {
         let googleContacts = try await fetchAllContacts(for: account)
-        return try await importContacts(googleContacts, existingContacts: existingContacts, progressHandler: progressHandler)
+        return try await importContacts(
+            googleContacts,
+            existingContacts: existingContacts,
+            progressHandler: progressHandler
+        )
     }
 
     private func importContacts(
@@ -127,7 +135,14 @@ class GoogleContactsImporter {
             }
 
             // Check for existing duplicate using strict matching (exact email, phone, or name)
-            if let existingMatch = findExactMatch(for: googleContact, emailIndex: emailIndex, phoneIndex: phoneIndex, nameIndex: nameIndex, contactsById: contactsById) {
+            let existingMatch = findExactMatch(
+                for: googleContact,
+                emailIndex: emailIndex,
+                phoneIndex: phoneIndex,
+                nameIndex: nameIndex,
+                contactsById: contactsById
+            )
+            if let existingMatch {
                 // Merge into existing contact
                 let merged = mergeContacts(existing: existingMatch, incoming: googleContact)
                 do {

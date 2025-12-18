@@ -27,7 +27,8 @@ struct MergeContactView: View {
                             .font(.title2)
                             .fontWeight(.bold)
 
-                        Text("Select which contact to keep as primary. Information from other contacts will be merged into it.")
+                        Text("Select which contact to keep as primary. " +
+                             "Information from other contacts will be merged into it.")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -107,12 +108,14 @@ struct MergeContactView: View {
                 Button("Cancel", role: .cancel) { }
                 Button("Merge", role: .destructive) {
                     Task {
-                        await viewModel.mergeContacts(group, keepingPrimary: selectedPrimaryId ?? group.contacts.first!.id)
+                        let primaryId = selectedPrimaryId ?? group.contacts.first!.id
+                        await viewModel.mergeContacts(group, keepingPrimary: primaryId)
                         dismiss()
                     }
                 }
             } message: {
-                Text("This will merge all contacts into the selected primary contact. Duplicate contacts will be deleted from Apple Contacts. This cannot be undone.")
+                Text("This will merge all contacts into the selected primary contact. " +
+                     "Duplicate contacts will be deleted from Apple Contacts. This cannot be undone.")
             }
         }
     }
@@ -258,9 +261,21 @@ struct MergePreviewSection: View {
 
 #Preview {
     let contacts = [
-        ContactData(firstName: "John", lastName: "Doe", emails: ["john@email.com"], phoneNumbers: ["555-1234"]),
-        ContactData(firstName: "John", lastName: "D.", emails: ["johnd@work.com"], phoneNumbers: ["555-5678"])
+        ContactData(
+            firstName: "John", lastName: "Doe",
+            emails: ["john@email.com"], phoneNumbers: ["555-1234"]
+        ),
+        ContactData(
+            firstName: "John", lastName: "D.",
+            emails: ["johnd@work.com"], phoneNumbers: ["555-5678"]
+        )
     ]
-    MergeContactView(group: DuplicateGroup(contacts: contacts, matchType: .exactEmail, nameSimilarity: 0.85, additionalScores: [:]))
+    let group = DuplicateGroup(
+        contacts: contacts,
+        matchType: .exactEmail,
+        nameSimilarity: 0.85,
+        additionalScores: [:]
+    )
+    MergeContactView(group: group)
         .environmentObject(ContactViewModel())
 }

@@ -71,7 +71,8 @@ struct ContactsListView: View {
             let digits = phone.filter { $0.isNumber }
             // US/Canada format: assume 10+ digits, area code is first 3 after country code
             if digits.count >= 10 {
-                let start = digits.count == 11 && digits.hasPrefix("1") ? digits.index(digits.startIndex, offsetBy: 1) : digits.startIndex
+                let hasCountryCode = digits.count == 11 && digits.hasPrefix("1")
+                let start = hasCountryCode ? digits.index(digits.startIndex, offsetBy: 1) : digits.startIndex
                 let end = digits.index(start, offsetBy: 3)
                 return "(\(String(digits[start..<end])))"
             }
@@ -168,7 +169,10 @@ struct ContactsListView: View {
                             }
                         }
                     } label: {
-                        Image(systemName: grouping == .none ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                        let iconName = grouping == .none
+                            ? "line.3.horizontal.decrease.circle"
+                            : "line.3.horizontal.decrease.circle.fill"
+                        Image(systemName: iconName)
                     }
                 }
                 ToolbarItem(placement: .primaryAction) {
