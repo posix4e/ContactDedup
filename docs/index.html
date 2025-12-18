@@ -251,12 +251,54 @@
             text-decoration: none;
         }
 
+        .screenshots {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .screenshot-item img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .screenshot-item p {
+            margin-top: 15px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
 
-            .features h2, .how-it-works h2, .import-sources h2, .privacy h2 {
+            .features h2, .how-it-works h2, .import-sources h2, .privacy h2, .screenshots h2 {
                 font-size: 1.75rem;
             }
         }
@@ -303,6 +345,38 @@
                     <div class="feature-icon">🔒</div>
                     <h3>Privacy First</h3>
                     <p>All processing happens on your device. No contact data is ever sent to external servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <div class="container">
+            <h2>See It In Action</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <img src="screenshot-contacts.png" alt="Contacts List">
+                    <p>Browse All Your Contacts</p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-contacts-filter.png" alt="Contact Filtering">
+                    <p>Filter by Domain or Group</p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-import.png" alt="Import Sources">
+                    <p>Import from Multiple Sources</p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-duplicates.png" alt="Duplicate Detection">
+                    <p>Find Duplicate Contacts</p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-cleanup.png" alt="Cleanup View">
+                    <p>Clean Up Incomplete Contacts</p>
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-settings.png" alt="Settings">
+                    <p>Customize Detection Settings</p>
                 </div>
             </div>
         </div>
