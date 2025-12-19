@@ -3,15 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E91000012D127A8000000001 /* ContactDedupApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000002D127A8000000001 /* ContactDedupApp.swift */; };
 		E91000032D127A8000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000022D127A8000000002 /* ContentView.swift */; };
 		E91000052D127A8000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E91000042D127A8000000003 /* Assets.xcassets */; };
-		E91000072D127A8000000004 /* ContactDedup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */; };
-		E91000092D127A8000000005 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000082D127A8000000005 /* CoreDataManager.swift */; };
 		E910000B2D127A8000000006 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000A2D127A8000000006 /* Contact.swift */; };
 		E910000D2D127A8000000007 /* AppleContactsImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000C2D127A8000000007 /* AppleContactsImporter.swift */; };
 		E910000F2D127A8000000008 /* GoogleContactsImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910000E2D127A8000000008 /* GoogleContactsImporter.swift */; };
@@ -26,17 +24,35 @@
 		E91000212D127A8000000011 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000202D127A8000000011 /* SettingsView.swift */; };
 		E91000232D127A8000000012 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000222D127A8000000012 /* ContactViewModel.swift */; };
 		E91000252D127A8000000013 /* GoogleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91000242D127A8000000013 /* GoogleAuthManager.swift */; };
-		E91000502D127A8000000050 /* LinkedInImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910004F2D127A8000000050 /* LinkedInImporter.swift */; };
 		E91000402D127A8000000040 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = E910003F2D127A8000000040 /* GoogleSignIn */; };
 		E91000422D127A8000000042 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E91000412D127A8000000042 /* GoogleSignInSwift */; };
+		E91000502D127A8000000050 /* LinkedInImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910004F2D127A8000000050 /* LinkedInImporter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		66D1E9662EF4971F00FB63B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90FFFF72D127A7F00000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E90FFFFE2D127A7F00000000;
+			remoteInfo = ContactDedup;
+		};
+		66D1E9732EF4975400FB63B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90FFFF72D127A7F00000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E90FFFFE2D127A7F00000000;
+			remoteInfo = ContactDedup;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		66D1E9602EF4971F00FB63B7 /* ContactDedupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContactDedupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66D1E96F2EF4975400FB63B7 /* ContactDedupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContactDedupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E90FFFFF2D127A7F00000000 /* ContactDedup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactDedup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91000002D127A8000000001 /* ContactDedupApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDedupApp.swift; sourceTree = "<group>"; };
 		E91000022D127A8000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E91000042D127A8000000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E91000082D127A8000000005 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E910000A2D127A8000000006 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		E910000C2D127A8000000007 /* AppleContactsImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContactsImporter.swift; sourceTree = "<group>"; };
 		E910000E2D127A8000000008 /* GoogleContactsImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleContactsImporter.swift; sourceTree = "<group>"; };
@@ -51,13 +67,31 @@
 		E91000202D127A8000000011 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E91000222D127A8000000012 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		E91000242D127A8000000013 /* GoogleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthManager.swift; sourceTree = "<group>"; };
-		E910004F2D127A8000000050 /* LinkedInImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInImporter.swift; sourceTree = "<group>"; };
 		E91000262D127A8000000014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E91000272D127A8000000015 /* ContactDedup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContactDedup.entitlements; sourceTree = "<group>"; };
-		E91000342D127A8000000025 /* ContactDedup.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactDedup.xcdatamodel; sourceTree = "<group>"; };
+		E910004F2D127A8000000050 /* LinkedInImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInImporter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		66D1E9612EF4971F00FB63B7 /* ContactDedupUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ContactDedupUITests; sourceTree = "<group>"; };
+		66D1E9702EF4975400FB63B7 /* ContactDedupTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ContactDedupTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		66D1E95D2EF4971F00FB63B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66D1E96C2EF4975400FB63B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90FFFFC2D127A7F00000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				E91000282D127A8000000016 /* ContactDedup */,
+				66D1E9612EF4971F00FB63B7 /* ContactDedupUITests */,
+				66D1E9702EF4975400FB63B7 /* ContactDedupTests */,
 				E91000002D127A8000000017 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				E90FFFFF2D127A7F00000000 /* ContactDedup.app */,
+				66D1E9602EF4971F00FB63B7 /* ContactDedupUITests.xctest */,
+				66D1E96F2EF4975400FB63B7 /* ContactDedupTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,12 +132,10 @@
 				E91000042D127A8000000003 /* Assets.xcassets */,
 				E91000262D127A8000000014 /* Info.plist */,
 				E91000272D127A8000000015 /* ContactDedup.entitlements */,
-				E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */,
 				E91000292D127A800000001A /* Models */,
 				E910002A2D127A800000001B /* Views */,
 				E910002B2D127A800000001C /* ViewModels */,
 				E910002C2D127A800000001D /* Services */,
-				E910002D2D127A800000001E /* CoreData */,
 			);
 			path = ContactDedup;
 			sourceTree = "<group>";
@@ -147,17 +183,55 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		E910002D2D127A800000001E /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				E91000082D127A8000000005 /* CoreDataManager.swift */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		66D1E95F2EF4971F00FB63B7 /* ContactDedupUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66D1E96A2EF4971F00FB63B7 /* Build configuration list for PBXNativeTarget "ContactDedupUITests" */;
+			buildPhases = (
+				66D1E95C2EF4971F00FB63B7 /* Sources */,
+				66D1E95D2EF4971F00FB63B7 /* Frameworks */,
+				66D1E95E2EF4971F00FB63B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66D1E9672EF4971F00FB63B7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				66D1E9612EF4971F00FB63B7 /* ContactDedupUITests */,
+			);
+			name = ContactDedupUITests;
+			packageProductDependencies = (
+			);
+			productName = ContactDedupUITests;
+			productReference = 66D1E9602EF4971F00FB63B7 /* ContactDedupUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		66D1E96E2EF4975400FB63B7 /* ContactDedupTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66D1E9752EF4975400FB63B7 /* Build configuration list for PBXNativeTarget "ContactDedupTests" */;
+			buildPhases = (
+				66D1E96B2EF4975400FB63B7 /* Sources */,
+				66D1E96C2EF4975400FB63B7 /* Frameworks */,
+				66D1E96D2EF4975400FB63B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66D1E9742EF4975400FB63B7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				66D1E9702EF4975400FB63B7 /* ContactDedupTests */,
+			);
+			name = ContactDedupTests;
+			packageProductDependencies = (
+			);
+			productName = ContactDedupTests;
+			productReference = 66D1E96F2EF4975400FB63B7 /* ContactDedupTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E90FFFFE2D127A7F00000000 /* ContactDedup */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E910002E2D127A800000001F /* Build configuration list for PBXNativeTarget "ContactDedup" */;
@@ -186,9 +260,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					66D1E95F2EF4971F00FB63B7 = {
+						CreatedOnToolsVersion = 26.1;
+						TestTargetID = E90FFFFE2D127A7F00000000;
+					};
+					66D1E96E2EF4975400FB63B7 = {
+						CreatedOnToolsVersion = 26.1;
+						TestTargetID = E90FFFFE2D127A7F00000000;
+					};
 					E90FFFFE2D127A7F00000000 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -211,11 +293,27 @@
 			projectRoot = "";
 			targets = (
 				E90FFFFE2D127A7F00000000 /* ContactDedup */,
+				66D1E95F2EF4971F00FB63B7 /* ContactDedupUITests */,
+				66D1E96E2EF4975400FB63B7 /* ContactDedupTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		66D1E95E2EF4971F00FB63B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66D1E96D2EF4975400FB63B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90FFFFD2D127A7F00000000 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,14 +325,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		66D1E95C2EF4971F00FB63B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66D1E96B2EF4975400FB63B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90FFFFB2D127A7F00000000 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E91000012D127A8000000001 /* ContactDedupApp.swift in Sources */,
 				E91000032D127A8000000002 /* ContentView.swift in Sources */,
-				E91000072D127A8000000004 /* ContactDedup.xcdatamodeld in Sources */,
-				E91000092D127A8000000005 /* CoreDataManager.swift in Sources */,
 				E910000B2D127A8000000006 /* Contact.swift in Sources */,
 				E910000D2D127A8000000007 /* AppleContactsImporter.swift in Sources */,
 				E910000F2D127A8000000008 /* GoogleContactsImporter.swift in Sources */,
@@ -255,7 +365,106 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		66D1E9672EF4971F00FB63B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E90FFFFE2D127A7F00000000 /* ContactDedup */;
+			targetProxy = 66D1E9662EF4971F00FB63B7 /* PBXContainerItemProxy */;
+		};
+		66D1E9742EF4975400FB63B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E90FFFFE2D127A7F00000000 /* ContactDedup */;
+			targetProxy = 66D1E9732EF4975400FB63B7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		66D1E9682EF4971F00FB63B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ARJ2X9A88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ttt246.ContactDedupUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ContactDedup;
+			};
+			name = Debug;
+		};
+		66D1E9692EF4971F00FB63B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ARJ2X9A88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ttt246.ContactDedupUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ContactDedup;
+			};
+			name = Release;
+		};
+		66D1E9762EF4975400FB63B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ARJ2X9A88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ttt246.ContactDedupTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContactDedup.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ContactDedup";
+			};
+			name = Debug;
+		};
+		66D1E9772EF4975400FB63B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ARJ2X9A88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ttt246.ContactDedupTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContactDedup.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ContactDedup";
+			};
+			name = Release;
+		};
 		E910002F2D127A8000000020 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -438,6 +647,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		66D1E96A2EF4971F00FB63B7 /* Build configuration list for PBXNativeTarget "ContactDedupUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66D1E9682EF4971F00FB63B7 /* Debug */,
+				66D1E9692EF4971F00FB63B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66D1E9752EF4975400FB63B7 /* Build configuration list for PBXNativeTarget "ContactDedupTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66D1E9762EF4975400FB63B7 /* Debug */,
+				66D1E9772EF4975400FB63B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E90FFFFA2D127A7F00000000 /* Build configuration list for PBXProject "ContactDedup" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -481,20 +708,6 @@
 			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		E91000062D127A8000000004 /* ContactDedup.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E91000342D127A8000000025 /* ContactDedup.xcdatamodel */,
-			);
-			currentVersion = E91000342D127A8000000025 /* ContactDedup.xcdatamodel */;
-			name = ContactDedup.xcdatamodeld;
-			path = CoreData/ContactDedup.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E90FFFF72D127A7F00000000 /* Project object */;
 }
