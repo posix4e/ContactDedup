@@ -89,6 +89,10 @@ ContactDedup respects your privacy:
 
 MIT License - see [LICENSE](LICENSE) for details.
 
+## TODO
+
+- [ ] Request `com.apple.developer.contacts.notes` entitlement approval from Apple for App Store release
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.

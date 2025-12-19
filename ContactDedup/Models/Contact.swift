@@ -1,13 +1,54 @@
 import Foundation
+import Contacts
+
+// MARK: - Supporting Types for Contact Data
+
+struct SocialProfile: Hashable, Codable {
+    var service: String  // e.g., "twitter", "linkedin", "facebook"
+    var username: String
+    var urlString: String?
+
+    var displayName: String {
+        if !username.isEmpty {
+            return "\(service): @\(username)"
+        }
+        return service
+    }
+}
+
+struct InstantMessageAddress: Hashable, Codable {
+    var service: String  // e.g., "Skype", "Slack", "Discord"
+    var username: String
+}
+
+struct Relationship: Hashable, Codable {
+    var name: String
+    var label: String  // e.g., "spouse", "assistant", "manager"
+}
+
+struct LabeledDate: Hashable, Codable {
+    var label: String  // e.g., "anniversary", "other"
+    var date: DateComponents
+}
 
 struct ContactData: Identifiable, Hashable {
     let id: UUID
     var firstName: String
     var lastName: String
+    var middleName: String
+    var nickname: String
     var company: String
+    var jobTitle: String
+    var department: String
     var emails: [String]
     var phoneNumbers: [String]
     var addresses: [String]
+    var urls: [String]
+    var socialProfiles: [SocialProfile]
+    var instantMessageAddresses: [InstantMessageAddress]
+    var relationships: [Relationship]
+    var birthday: DateComponents?
+    var dates: [LabeledDate]
     var notes: String
     var imageData: Data?
     var source: ContactSource
@@ -51,10 +92,20 @@ struct ContactData: Identifiable, Hashable {
         id: UUID = UUID(),
         firstName: String = "",
         lastName: String = "",
+        middleName: String = "",
+        nickname: String = "",
         company: String = "",
+        jobTitle: String = "",
+        department: String = "",
         emails: [String] = [],
         phoneNumbers: [String] = [],
         addresses: [String] = [],
+        urls: [String] = [],
+        socialProfiles: [SocialProfile] = [],
+        instantMessageAddresses: [InstantMessageAddress] = [],
+        relationships: [Relationship] = [],
+        birthday: DateComponents? = nil,
+        dates: [LabeledDate] = [],
         notes: String = "",
         imageData: Data? = nil,
         source: ContactSource = .apple,
@@ -67,10 +118,20 @@ struct ContactData: Identifiable, Hashable {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
+        self.middleName = middleName
+        self.nickname = nickname
         self.company = company
+        self.jobTitle = jobTitle
+        self.department = department
         self.emails = emails
         self.phoneNumbers = phoneNumbers
         self.addresses = addresses
+        self.urls = urls
+        self.socialProfiles = socialProfiles
+        self.instantMessageAddresses = instantMessageAddresses
+        self.relationships = relationships
+        self.birthday = birthday
+        self.dates = dates
         self.notes = notes
         self.imageData = imageData
         self.source = source

@@ -153,15 +153,23 @@ class LinkedInImporter {
 
         let emails = email.isEmpty ? [] : [email]
 
-        // Build notes with position and LinkedIn URL
-        var notesParts: [String] = []
-        if !position.isEmpty {
-            notesParts.append("Position: \(position)")
-        }
+        // Store LinkedIn URL in the urls array (proper field)
+        let urls = linkedinURL.isEmpty ? [] : [linkedinURL]
+
+        // Store LinkedIn as a social profile
+        var socialProfiles: [SocialProfile] = []
         if !linkedinURL.isEmpty {
-            notesParts.append("LinkedIn: \(linkedinURL)")
+            // Extract username from LinkedIn URL if possible
+            let username = linkedinURL
+                .replacingOccurrences(of: "https://www.linkedin.com/in/", with: "")
+                .replacingOccurrences(of: "http://www.linkedin.com/in/", with: "")
+                .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            socialProfiles.append(SocialProfile(
+                service: "LinkedIn",
+                username: username,
+                urlString: linkedinURL
+            ))
         }
-        let notes = notesParts.joined(separator: "\n")
 
         // Use LinkedIn URL as identifier if available, otherwise use name
         let identifier = linkedinURL.isEmpty ? "\(firstName.lowercased()).\(lastName.lowercased())" : linkedinURL
@@ -170,10 +178,13 @@ class LinkedInImporter {
             firstName: firstName,
             lastName: lastName,
             company: company,
+            jobTitle: position,
             emails: emails,
             phoneNumbers: [],
             addresses: [],
-            notes: notes,
+            urls: urls,
+            socialProfiles: socialProfiles,
+            notes: "",
             imageData: nil,
             source: .linkedin,
             linkedinIdentifier: identifier
@@ -236,21 +247,23 @@ class LinkedInImporter {
 
     private func findExactMatch(
         for contact: ContactData,
-        emailIndex: [String: UUID],
-        nameIndex: [String: UUID],
+        emailIndex: [String: Set<UUID>],
+        nameIndex: [String: Set<UUID>],
         contactsById: [UUID: ContactData]
     ) -> ContactData? {
         // Check email first
         for email in contact.emails {
             let normalized = email.lowercased()
-            if let matchId = emailIndex[normalized], let match = contactsById[matchId] {
+            if let matchIds = emailIndex[normalized], let matchId = matchIds.first,
+               let match = contactsById[matchId] {
                 return match
             }
         }
 
         // Check exact name match
         let nameKey = normalizeNameKey(firstName: contact.firstName, lastName: contact.lastName)
-        if !nameKey.isEmpty, let matchId = nameIndex[nameKey], let match = contactsById[matchId] {
+        if !nameKey.isEmpty, let matchIds = nameIndex[nameKey], let matchId = matchIds.first,
+           let match = contactsById[matchId] {
             return match
         }
 
@@ -264,45 +277,120 @@ class LinkedInImporter {
         return "\(first)|\(last)"
     }
 
-    private func buildNameIndex(_ contacts: [ContactData]) -> [String: UUID] {
-        var index: [String: UUID] = [:]
+    private func buildNameIndex(_ contacts: [ContactData]) -> [String: Set<UUID>] {
+        var index: [String: Set<UUID>] = [:]
         for contact in contacts {
             let key = normalizeNameKey(firstName: contact.firstName, lastName: contact.lastName)
             if !key.isEmpty {
-                index[key] = contact.id
+                index[key, default: []].insert(contact.id)
             }
         }
         return index
     }
 
-    private func buildEmailIndex(_ contacts: [ContactData]) -> [String: UUID] {
-        var index: [String: UUID] = [:]
+    private func buildEmailIndex(_ contacts: [ContactData]) -> [String: Set<UUID>] {
+        var index: [String: Set<UUID>] = [:]
         for contact in contacts {
             for email in contact.emails {
-                index[email.lowercased()] = contact.id
+                index[email.lowercased(), default: []].insert(contact.id)
             }
         }
         return index
     }
 
+    /// Lossless merge - preserves all data from both contacts, storing conflicts in notes
     private func mergeContacts(existing: ContactData, incoming: ContactData) -> ContactData {
         var merged = existing
+        var mergeInfo: [String] = []
+        var alternateNames: [String] = []
 
-        // Add unique emails
-        let newEmails = incoming.emails.filter { email in
-            !existing.emails.contains { $0.lowercased() == email.lowercased() }
-        }
+        // === ADDITIVE MERGES (no data loss) ===
+
+        // Add unique emails (case-insensitive)
+        let existingEmailsLower = Set(existing.emails.map { $0.lowercased() })
+        let newEmails = incoming.emails.filter { !existingEmailsLower.contains($0.lowercased()) }
         merged.emails.append(contentsOf: newEmails)
 
-        // Fill in missing fields
-        if merged.firstName.isEmpty { merged.firstName = incoming.firstName }
-        if merged.lastName.isEmpty { merged.lastName = incoming.lastName }
-        if merged.company.isEmpty { merged.company = incoming.company }
-        if merged.notes.isEmpty { merged.notes = incoming.notes }
+        // Add unique URLs
+        let existingUrlsLower = Set(existing.urls.map { $0.lowercased() })
+        let newUrls = incoming.urls.filter { !existingUrlsLower.contains($0.lowercased()) }
+        merged.urls.append(contentsOf: newUrls)
+
+        // Add unique social profiles
+        let existingProfiles = Set(merged.socialProfiles.map { "\($0.service.lowercased()):\($0.username.lowercased())" })
+        let newProfiles = incoming.socialProfiles.filter {
+            !existingProfiles.contains("\($0.service.lowercased()):\($0.username.lowercased())")
+        }
+        merged.socialProfiles.append(contentsOf: newProfiles)
+
+        // === CONFLICT-AWARE MERGES (preserve conflicts in notes) ===
+
+        // Handle name conflicts
+        let incomingFullName = "\(incoming.firstName) \(incoming.lastName)".trimmingCharacters(in: .whitespaces)
+        let existingFullName = "\(existing.firstName) \(existing.lastName)".trimmingCharacters(in: .whitespaces)
+        if !incomingFullName.isEmpty && incomingFullName.lowercased() != existingFullName.lowercased() {
+            alternateNames.append(incomingFullName)
+        }
+
+        // First name
+        if !incoming.firstName.isEmpty && merged.firstName.isEmpty {
+            merged.firstName = incoming.firstName
+        } else if !incoming.firstName.isEmpty && incoming.firstName.lowercased() != merged.firstName.lowercased() {
+            mergeInfo.append("First name: \(incoming.firstName)")
+        }
+
+        // Last name
+        if !incoming.lastName.isEmpty && merged.lastName.isEmpty {
+            merged.lastName = incoming.lastName
+        } else if !incoming.lastName.isEmpty && incoming.lastName.lowercased() != merged.lastName.lowercased() {
+            mergeInfo.append("Last name: \(incoming.lastName)")
+        }
+
+        // Company
+        if !incoming.company.isEmpty && merged.company.isEmpty {
+            merged.company = incoming.company
+        } else if !incoming.company.isEmpty && incoming.company.lowercased() != merged.company.lowercased() {
+            mergeInfo.append("Company: \(incoming.company)")
+        }
+
+        // Job title
+        if !incoming.jobTitle.isEmpty && merged.jobTitle.isEmpty {
+            merged.jobTitle = incoming.jobTitle
+        } else if !incoming.jobTitle.isEmpty && incoming.jobTitle.lowercased() != merged.jobTitle.lowercased() {
+            mergeInfo.append("Job title: \(incoming.jobTitle)")
+        }
+
+        // Notes - always append, never overwrite
+        if !incoming.notes.isEmpty {
+            if merged.notes.isEmpty {
+                merged.notes = incoming.notes
+            } else if incoming.notes != merged.notes {
+                mergeInfo.append("Notes: \(incoming.notes)")
+            }
+        }
 
         // Store LinkedIn identifier
         merged.linkedinIdentifier = incoming.linkedinIdentifier
 
+        // Store alternate names in nickname field
+        if !alternateNames.isEmpty {
+            let uniqueAlternates = Array(Set(alternateNames)).joined(separator: ", ")
+            if merged.nickname.isEmpty {
+                merged.nickname = uniqueAlternates
+            } else {
+                merged.nickname = "\(merged.nickname), \(uniqueAlternates)"
+            }
+        }
+
+        // Append merge history to notes
+        if !mergeInfo.isEmpty {
+            let mergeHistory = mergeInfo.joined(separator: "\n")
+            let timestamp = ISO8601DateFormatter().string(from: Date())
+            let header = "\n\n=== MERGED FROM LINKEDIN (\(timestamp)) ===\n"
+            merged.notes = merged.notes + header + mergeHistory
+        }
+
+        merged.updatedAt = Date()
         return merged
     }
 }
