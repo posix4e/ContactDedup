@@ -389,12 +389,60 @@
         .screenshot-item img:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        .screenshot-item h3 {
+            margin-top: 20px;
+            font-size: 1.25rem;
+            color: var(--text);
         }
 
         .screenshot-item p {
-            margin-top: 15px;
-            font-weight: 500;
-            color: var(--text);
+            margin-top: 10px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .lightbox-close:hover {
+            opacity: 0.7;
         }
 
         @media (max-width: 768px) {
@@ -420,75 +468,49 @@
         <a href="https://testflight.apple.com/join/jXveM5qx" class="cta-button">Download on TestFlight</a>
     </section>
 
-    <section class="features">
-        <div class="container">
-            <h2>Powerful Features</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Smart Duplicate Detection</h3>
-                    <p>Advanced algorithms find duplicates by name, email, phone number, or similar patterns. Adjustable sensitivity lets you control matching strictness.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>One-Tap Merge</h3>
-                    <p>Combine duplicate contacts while preserving all information. Merge individually or batch process all duplicates at once.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📥</div>
-                    <h3>Multi-Source Import</h3>
-                    <p>Import contacts from Apple Contacts, multiple Google accounts, and LinkedIn CSV exports. Keep everything in sync.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧹</div>
-                    <h3>Incomplete Contact Cleanup</h3>
-                    <p>Find and remove contacts missing essential information like email or phone number. Keep your contact list clean.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✏️</div>
-                    <h3>Easy Editing</h3>
-                    <p>Update contact details directly in the app. Changes sync back to Apple Contacts automatically.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Privacy First</h3>
-                    <p>All processing happens on your device. No contact data is ever sent to external servers.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="screenshots">
         <div class="container">
             <h2>See It In Action</h2>
             <div class="screenshot-grid">
                 <div class="screenshot-item">
-                    <img src="screenshot-contacts.png" alt="Contacts List">
-                    <p>Browse All Your Contacts</p>
+                    <img src="screenshot-contacts.png" alt="Contacts List" onclick="openLightbox(this.src)">
+                    <h3>Browse All Your Contacts</h3>
+                    <p>View and search through all your contacts in one place. Update details directly in the app with changes syncing back to Apple Contacts automatically.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshot-contacts-filter.png" alt="Contact Filtering">
-                    <p>Filter by Domain or Group</p>
+                    <img src="screenshot-contacts-filter.png" alt="Contact Filtering" onclick="openLightbox(this.src)">
+                    <h3>Filter by Domain or Group</h3>
+                    <p>Quickly find contacts by filtering based on email domain, contact group, or custom criteria. Stay organized with powerful search.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshot-import.png" alt="Import Sources">
-                    <p>Import from Multiple Sources</p>
+                    <img src="screenshot-import.png" alt="Import Sources" onclick="openLightbox(this.src)">
+                    <h3>Multi-Source Import</h3>
+                    <p>Import contacts from Apple Contacts, multiple Google accounts, and LinkedIn CSV exports. Keep everything in sync from all your sources.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshot-duplicates.png" alt="Duplicate Detection">
-                    <p>Find Duplicate Contacts</p>
+                    <img src="screenshot-duplicates.png" alt="Duplicate Detection" onclick="openLightbox(this.src)">
+                    <h3>Smart Duplicate Detection</h3>
+                    <p>Advanced algorithms find duplicates by name, email, phone number, or similar patterns. Merge individually or batch process all duplicates at once.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshot-cleanup.png" alt="Cleanup View">
-                    <p>Clean Up Incomplete Contacts</p>
+                    <img src="screenshot-cleanup.png" alt="Cleanup View" onclick="openLightbox(this.src)">
+                    <h3>Incomplete Contact Cleanup</h3>
+                    <p>Find and remove contacts missing essential information like email or phone number. Keep your contact list clean and useful.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshot-settings.png" alt="Settings">
-                    <p>Customize Detection Settings</p>
+                    <img src="screenshot-settings.png" alt="Settings" onclick="openLightbox(this.src)">
+                    <h3>Customize Detection Settings</h3>
+                    <p>Adjustable sensitivity lets you control matching strictness. Fine-tune duplicate detection to match your needs.</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Lightbox for full-size images -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Full size screenshot">
+    </div>
 
     <section class="how-it-works">
         <div class="container">
@@ -596,6 +618,25 @@
     </section>
 
     <script>
+        // Lightbox functions
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
         document.getElementById('accessForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
